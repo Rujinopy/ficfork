@@ -6,7 +6,7 @@ import Card from "../components/Card";
 import useSWRInfinite from 'swr/infinite'
 import SearchComponent from "../components/searchbar";
 //fetch all posts categorized by mangaMainList
-
+import Link from "next/link";
 const fetcher = (url: any) => fetch(url).then((res) => res.json())
 const limit = 4    
 
@@ -20,35 +20,16 @@ export default function Category() {
         e.preventDefault()
         setAnimeName(e.currentTarget.alt)
     }
-    // useEffect(() => {
-    //     console.log(animeName)
-    //     fetch(`http://localhost:3000/api/getPosts?input=${animeName}&limit=20`)
-    //     .then(res => res.json())
-    //     .then(data => console.log(data))
-    //   }, [animeName])
-      
-    //fetching data from api, refreshing every 0.5 seconds by clicking anime bar
-    
-    //swr infinite
+
     const getKey = (pageIndex: number, previousPageData: any) => {
         pageIndex = pageIndex * limit
         if (previousPageData && !previousPageData.length) return null // reached the end
         return `http://localhost:3000/api/getPosts?input=${animeName}&limit=4&skip=${pageIndex}` // SWR key
         }
     const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher)
+    const newData = data?.flat()
+    console.log(newData);
     
-    // const isLoadingInitialData = !data && !error
-    // const isLoadingMore = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === 'undefined')
-    // const isEmpty = data?.[0]?.length === 0
-    // const isReachingEnd = isEmpty || (data && data[data.length - 1]?.length < limit)
-    // const isReachingStart = data && data[0]?.length < limit
-
-    
-    //if scrolling to bottom, if data left, load more data
-    
-   
-
-
     return (
         <div className="bg-slate-800">
         <div className="max-w-7xl mx-auto bg-white h-screen p-3">
@@ -58,7 +39,7 @@ export default function Category() {
                     //profile image in circle
                     <div className='flex items-center space-x-2'>
                         {session.user?.image == null && <img className='w-8 h-8 rounded-full' src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="profile" />}
-                        {session.user?.image && <img className='w-8 h-8 rounded-full' src={session.user?.image} alt="profile" />}
+                        {session.user?.image && <Link href="/profile"><img className='hover:cursor-pointer w-8 h-8 rounded-full' src={session.user?.image} alt="profile" /></Link>}
                         <h1 className='text-lg'>{session.user?.name}</h1>
                     </div>
                 }
@@ -71,9 +52,9 @@ export default function Category() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:px-0 mt-5 w-full md:w-auto ">
-                {data?.map((posts: any) => posts.map((post: any) => (
-                    <Card key={post._id} topic={post.topic} short={post.short} cover={post.cover} />
-                )))}
+                {newData?.map((post: any) =>  (
+                     <Card id={post.id} topic={post.topic} short={post.short} cover={post.cover} />
+                ))}
                 
             </div>
             

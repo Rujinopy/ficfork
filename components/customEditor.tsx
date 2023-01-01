@@ -32,12 +32,14 @@ const initialData = () => {
 export default function CustomEditor(props : any) {
     const { content, setContent} = props
     
-    console.log(content);
+    // console.log(content);
     
     const editor = useRef(null)
 
     const onFileChange = async(file:File)=> {
         const form_data = new FormData()
+        // console.log(file);
+        
         let preset = process.env.NEXT_PUBLIC_PRESET
         if(preset){
             form_data.append('upload_preset',preset)
@@ -47,7 +49,7 @@ export default function CustomEditor(props : any) {
             form_data.append('file',file)
             const imageUrl =await CloudImage(form_data)
             if(imageUrl){
-                console.log(imageUrl);
+                // console.log(imageUrl);
                 
                  return imageUrl
         }
@@ -94,12 +96,21 @@ export default function CustomEditor(props : any) {
             }
         },
         onReady: () => {
-            console.log('Editor.js is ready to work!')
+            //editorjs.save the initial data
+            editorjs.save().then((outputData: any) => {
+                const data = JSON.stringify(outputData)
+                // console.log('Article data: ', outputData);
+                setContent(outputData)
+            }
+            ).catch((error: any) => {
+                console.log('Saving failed: ', error)
+            }
+            )
         }
         ,onChange: async () => {
            const change = await editorjs.save().then((outputData: any) => {
                 const data = JSON.stringify(outputData)
-                console.log('Article data: ', outputData);                
+                // console.log('Article data: ', outputData);                
                 setContent(outputData)
             }).catch((error: any) => {
                 console.log('Saving failed: ', error)
@@ -108,8 +119,8 @@ export default function CustomEditor(props : any) {
     })
     }, [])
     return (
-        <div>
-            <div id="editorjs"></div>
+        <div className=''>
+            <div className='' id="editorjs"></div>
         </div>
     )
 }

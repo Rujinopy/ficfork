@@ -65,18 +65,7 @@ export default function Home() {
               <TopicForm />
             </div>
           </div> 
-          {/* {session && 
-          <div className='max-w-md h-fit'>
-            <h1 className='text-2xl text-bold p-2 text-center md:text-left pt-5'>My items</h1>
-            <ul className='flex'>
-              {myPosts?.map((data: card) => (
-                <li className='mx-2' key={data.title}>
-                  <Card image={data.image} title={data.title} short={data.short}/>
-                </li>
-              ))}
-            </ul>
-          </div>
-          } */}
+        
           <div id="searchBar" ref={parentRef} className='mx-auto max-w-5xl mb-8 pt-8'>
             <div className="flex mb-1 justify-center md:justify-start">
               <button onClick={handleClickL} className={`p-1 w-1/5 ml-1 md:ml-0 rounded-l-lg bg-red-500 border-2 border-black hover:bg-red-300 ${mode === "fanfic" ? "bg-red-300":""}`}>fanfic</button>

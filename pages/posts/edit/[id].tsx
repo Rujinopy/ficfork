@@ -7,7 +7,7 @@ import { unstable_getServerSession } from "next-auth/next"
 import { authOptions } from '/home/ruji/mangafork-next/pages/api/auth/[...nextauth]';
 import { GetServerSideProps } from 'next';
 import { lowerFirst } from 'lodash';
-
+import Link from 'next/link';
 const CustomEditor = dynamic(()=>import('/home/ruji/mangafork-next/components/customEditor'),{ssr:false})
 const mangaMainList = ["Reborn", "Naruto", "Bleach", "One Piece", "Fairy Tail", "Hunter x Hunter", "Dragon Ball", "Death Note", "Tokyo Ghoul", "Black Clover"]
 
@@ -17,11 +17,7 @@ interface IFromInput {
     manga: string;
   }
   
-  let GlobalData = {
-    topic: "",
-    short: "",
-    manga: "",
-  } 
+ 
   export default ({post} : any) => {
     const { data: session, status } = useSession();
     //convert post.content to string
@@ -29,18 +25,30 @@ interface IFromInput {
 
     const [content,setContent] = useState(`${newContent}`)
     
+    //if content in state is not changed, set it to post.content
+    useEffect(() => {
+        if(content == "" || content == null || content == undefined || content == "undefined" || content == "null" || content == " " ) {
+            setContent(`${newContent}`)
+        }
+    }, [content])
 
     // set initial value for form at first render
     const { register, handleSubmit } = useForm<IFromInput>({
         defaultValues: {
             topic: post.topic,
             short: post.short,
-            manga: post.manga,
+            manga: post.mangaTitle,
         }
     });
+
+    let GlobalData = {
+        topic: post.topic,
+        short: post.short,
+        manga: post.mangaTitle,
+      } 
+
     const onChange: SubmitHandler<IFromInput> = data => {
       GlobalData = data
-      console.log(data)
     }
     
     if(session) {
@@ -64,6 +72,8 @@ interface IFromInput {
                     short: GlobalData.short,
                     manga: GlobalData.manga,
                   }),
+                }).then((res) => res.json()).then((data) => {
+                    console.log(data)
                 })
                 //return to home page
                 window.location.href = `/posts/${post.id}`
@@ -73,7 +83,7 @@ interface IFromInput {
                 //profile image in circle
                 <div className='flex items-center space-x-2'>
                   {session.user?.image == null && <img className='w-8 h-8 rounded-full' src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="profile" />}
-                  {session.user?.image && <img className='w-8 h-8 rounded-full' src={session.user?.image} alt="profile" />}
+                  {session.user?.image && <Link href="/profile"><img className='hover:cursor-pointer w-8 h-8 rounded-full' src={session.user?.image} alt="profile" /></Link>}
                   <h1 className='text-lg'>{session.user?.name}</h1>
                 </div>
               }
@@ -128,6 +138,8 @@ interface IFromInput {
             content: true,
             mangaTitle: true,
         }
+    }).finally(async () => {
+        await prisma.$disconnect()
     })
 
 

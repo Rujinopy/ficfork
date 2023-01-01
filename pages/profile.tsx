@@ -55,6 +55,10 @@ export default function Profile({ user } : any) {
                                     <h2>Like :&nbsp;</h2>
                                     <h2>{post.likes}</h2>
                                 </div>
+                                <div className="flex">
+                                    <h2>funded :&nbsp;</h2>
+                                    <h2>{post.funding}</h2>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -90,6 +94,7 @@ export const getServerSideProps:GetServerSideProps = async (context: any) => {
                     short: true,
                     cover: true,
                     likes: true,
+                    funding: true
                 }
             }
         }

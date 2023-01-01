@@ -6,7 +6,7 @@ import { authOptions } from "./auth/[...nextauth]"
 import { method } from "lodash";
 
 export default async function addPost(req: NextApiRequest, res: NextApiResponse) {
-  const { topic, content, short, manga, id} = req.body;
+  const { topic, content, short, manga, id, cover} = req.body;
   const prisma = new PrismaClient();
   const session = await unstable_getServerSession(req, res, authOptions)
 
@@ -18,6 +18,7 @@ export default async function addPost(req: NextApiRequest, res: NextApiResponse)
             content: content,
             short: short,
             mangaTitle: manga,
+            cover: cover,
             author: {
                 connect: {
                     email: session.user?.email
@@ -27,7 +28,7 @@ export default async function addPost(req: NextApiRequest, res: NextApiResponse)
 
         }
     }).then((data) => {
-      console.log(data);
+      
       
         res.status(200).json({ message: "success" })
     }).catch((err) => {
@@ -37,6 +38,7 @@ export default async function addPost(req: NextApiRequest, res: NextApiResponse)
     })
   }
   else if (req.method === "PATCH") {
+     console.log("patch");
      
     const update = prisma.post.update({
       where: {
@@ -47,9 +49,11 @@ export default async function addPost(req: NextApiRequest, res: NextApiResponse)
         content: content,
         short: short,
         mangaTitle: manga,
+        cover: cover,
       }
     }).then((data) => {
-      console.log(data);
+      console.log("update");
+      res.status(200).json({ message: "success" })
     }).catch((err) => {
       console.log(err);
     }).finally(async () => {

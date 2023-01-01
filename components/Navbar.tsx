@@ -20,9 +20,9 @@ function Navbar(props: any) {
       </Link>    
       <div className="hidden justify-center space-x-7 w-full py-2 md:block flex-grow lg:flex lg:items-center lg:w-auto rounded-full bg-red-500 border-4 border-black">
           
-          <Link href={"/introduction"}>
+          {/* <Link href={"/introduction"}>
               <button className=" text-white hover:border-black hover:border rounded-full text-lg py-1 px-2">Tutorial</button>
-          </Link>
+          </Link> */}
 
           <Link href={"/compose"}>
               <button className=" text-white hover:border-black hover:border rounded-full text-lg py-1 px-2">Publish</button>
