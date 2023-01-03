@@ -7,7 +7,6 @@
 * Registration and login with credential, Google's account, Facebook's account.
 * Easy to publish, edit and delete any post with inline toolsbar.
 * "Reading Matter" - All publishment will be rendered into slides with vertical scroll for easy reading. (1 line per 1 slide)
-* Like button
 * Funding button to let that fiction be a real manga when reaching some target money.
 
 #### User's Journey:
