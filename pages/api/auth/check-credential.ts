@@ -11,10 +11,7 @@ const prisma = new PrismaClient()
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method == "POST") {
-        // console.log(req.body);
-        // console.log("kuy");
-        
-        
+
         await handlePOST(res, req)
     }
     else {

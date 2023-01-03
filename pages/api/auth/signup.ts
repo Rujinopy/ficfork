@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             data: {
                 email,
                 password: hashedPassword,
-                image: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+                image: "blank_profile.png",
             },
         });
         res.status(200).json({ message: "User created" });

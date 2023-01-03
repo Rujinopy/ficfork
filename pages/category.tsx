@@ -24,7 +24,7 @@ export default function Category() {
     const getKey = (pageIndex: number, previousPageData: any) => {
         pageIndex = pageIndex * limit
         if (previousPageData && !previousPageData.length) return null // reached the end
-        return `http://localhost:3000/api/getPosts?input=${animeName}&limit=4&skip=${pageIndex}` // SWR key
+        return `/api/getPosts?input=${animeName}&limit=4&skip=${pageIndex}` // SWR key
         }
     const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher)
     const newData = data?.flat()

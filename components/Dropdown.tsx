@@ -11,12 +11,6 @@ const DropdownMenu = (props: any) => {
     
   return (
     <div className="relative flex text-left">
-        
-      {/* <Link href={"/profile"}>
-        
-            <a className="pr-3"><img className="w-10 h-10 rounded-full hover:border-2 border-black" src={session?.user?.image === undefined ? "session.user?.image":"/home/ruji/mangafork-next/public/blank_profile.png"} alt="" /></a>
-        
-      </Link> */}
       <div>
         <span className=" ">
           <button

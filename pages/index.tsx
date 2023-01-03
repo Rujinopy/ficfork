@@ -23,7 +23,7 @@ export default function Home() {
         return `https://api.jikan.moe/v4/manga?order_by=score&sort=desc&limit=50&letter=katekyo%20hitman`}
       }
     else if (mode === "fanfic") {
-      return `http://localhost:3000/api/getPosts?input=${input}&limit=20`
+      return `/api/getPosts?input=${input}&limit=20`
     }
     
   }

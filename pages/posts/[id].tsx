@@ -176,7 +176,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   //prisma fetch data
   const post = await prisma.post.findUnique({
     where: {
-      id: params!.id
+      id: params!.id?.toString()
     },
     select: {
       id: true,

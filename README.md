@@ -1,34 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FICFORK
+#### Video Demo:  <URL HERE>
+#### Description:
+**FicFork** is an online fiction blog letting users to write there own manga's fan fiction they like separating from the real storyline with crowndfunding feature to turn it to a real manga.
 
-## Getting Started
+#### Features:
+* Registration and login with credential, Google's account, Facebook's account.
+* Easy to publish, edit and delete any post with inline toolsbar.
+* "Reading Matter" - All publishment will be rendered into slides with vertical scroll for easy reading. (1 line per 1 slide)
+* Like button
+* Funding button to let that fiction be a real manga when reaching some target money.
 
-First, run the development server:
+#### User's Journey:
+**Writer** might be anyone who dissapointed, how their beloving manga ended and want to see the manga in the way they want but... they just can't even draw a melon!
+**Reader** might be anyone who love fan fiction.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+1. A user registers to FicFork and composes a story with money target at 30 bucks to hire someone to draw his manga.
+2. Other users discover this post on website
+3. The other user love the story and decide to fund this post wiht 30 bucks.
+4. Any artist who is ok with this amount of money can sending a request for drawing a manga from the fiction and get their money.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### Tech Stacks:
+* Front-End and Back-End: Next.js with Typescript
+* CSS framework: TailwindCSS
+* Database: PostgresSQL with Prisma
+* API fetcher: SWR
+* Text-editor: Editor.js
+* Payment-management: Stripe API

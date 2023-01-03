@@ -60,7 +60,7 @@ interface IFromInput {
               <button className=' py-1 px-6 bg-black text-white hover:bg-red-500 rounded-lg' 
               onClick={()=>
               {
-                const res = fetch('http://localhost:3000/api/addCompose', {
+                const res = fetch('/api/addCompose', {
                   method: 'PATCH',
                   headers: {
                     'Content-Type': 'application/json',                  
