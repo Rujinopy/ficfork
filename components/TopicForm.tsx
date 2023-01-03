@@ -40,6 +40,7 @@ export default function App() {
       }).then((res) => {
         if (res.status === 200) {
           alert("Add your topic successfully. Check your topic in your profile page")
+          window.location.href = "/profile"
         }
       })
     }
@@ -47,13 +48,13 @@ export default function App() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="bg-red-500 flex flex-col border-4 border-gray-800 w-full rounded-lg px-4 py-5 space-y-3 ">
+    <form onSubmit={handleSubmit(onSubmit)} className="bg-white flex flex-col border-4 border-gray-800 w-full rounded-lg px-4 py-5 space-y-3 ">
       <label className="text-lg">Topic</label>
       <input required className="border border-gray-800 rounded-md py-2 px-1" {...register("topic")} />
       <label className="text-lg">Short</label>
       <textarea className="border border-gray-800 rounded-md py-2 px-1 resize-none" rows={4} cols={50} {...register("short")} />
       <label className="text-lg">Manga selection</label>
-      <select {...register("manga")} className="rounded-xl p-1">
+      <select {...register("manga")} className="rounded-xl p-1 border border-black">
         <option value="">select a manga</option>
         {mangaMainList.map((manga) => (
           <option key={manga} value={manga}>{manga}</option>

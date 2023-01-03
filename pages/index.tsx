@@ -4,7 +4,7 @@ import { useState, useContext, createContext, useEffect, useRef, useDebugValue }
 import useSWR from 'swr'
 import { useSession, signIn, signOut, getSession } from 'next-auth/react'
 import TopicForm from "../components/TopicForm";
-import Card from '../components/Card';
+import DropdownMenu from "../components/Dropdown";
 
 const fetcher = (url: any) => fetch(url).then((res) => res.json())
 
@@ -54,27 +54,35 @@ export default function Home() {
   }
 
   return (
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto bg-red-100 h-full relative">
           <Navbar parentRef={parentRef}/>
-          <div className='pt-8 h-fit md:flex'>
-            <div className='my-auto mx-auto px-3 md:px-0 md:py-5 py-8'>
-              <h1 className='text-4xl pr-2 text-black text-center md:text-left'>Release your version of</h1>
-              <h2 className='text-5xl text-bold text-red-500 text-center md:text-left'>{mangaIwant}</h2>
+          <div className="md:hidden absolute top-4 right-3 p-1 ">
+          <DropdownMenu />
+          </div>
+          <div className='md:pt-8 h-fit md:flex w-full'>
+            <div className='px-3 md:w-1/2 md:px-0 md:py-5 py-8'>
+              <div className="flex flex-col place-content-center md:h-80">
+                <h1 className='text-4xl font-bold pr-2 text-black text-center'>Go Fund Your Own</h1>
+                <h2 className='text-5xl font-bold text-red-400 text-center'>{mangaIwant}</h2>
+              </div>
             </div>
-            <div className=' my-auto px-3 md:px-0 mx-auto md:mr-6'>
+            <div className='md:w-1/2 my-auto px-3 md:px-0 mx-auto md:mr-6'>
               <TopicForm />
             </div>
           </div> 
         
           <div id="searchBar" ref={parentRef} className='mx-auto max-w-5xl mb-8 pt-8'>
-            <div className="flex mb-1 justify-center md:justify-start">
-              <button onClick={handleClickL} className={`p-1 w-1/5 ml-1 md:ml-0 rounded-l-lg bg-red-500 border-2 border-black hover:bg-red-300 ${mode === "fanfic" ? "bg-red-300":""}`}>fanfic</button>
-              <button onClick={handleClickR} className={`p-1 w-1/5 mr-1 md:mr-0 rounded-r-lg bg-red-500 border-2 border-black hover:bg-red-400 ${mode === "manga" ? "bg-red-300":""}`}>manga</button>
+            <div className="flex mb-1 justify-center md:justify-start pl-5">
+              <button onClick={handleClickL} className={`p-1 w-1/5 ml-1 md:ml-0 rounded-l-lg bg-white border-2 border-black hover:bg-red-300 ${mode === "fanfic" ? "bg-red-300":""}`}>fanfic</button>
+              <button onClick={handleClickR} className={`p-1 w-1/5 mr-1 md:mr-0 rounded-r-lg bg-white border-2 border-black hover:bg-red-400 ${mode === "manga" ? "bg-red-300":""}`}>manga</button>
             </div>
-            <SearchComponents changeHandler={changeHandler} value={input}/>
+            <div className="px-5">
+              <SearchComponents changeHandler={changeHandler} value={input}/>
+            </div>
+            
           </div>
           
-          <div className='max-w-5xl mx-auto'>
+          <div className='max-w-5xl mx-auto px-5'>
             {isLoading && <div>Loading...</div>}
             {mode === "fanfic" ? data?.map((fic: card) => (
               <div className='flex border rounded-xl' key={fic.topic}>

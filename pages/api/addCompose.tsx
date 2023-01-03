@@ -21,15 +21,11 @@ export default async function addPost(req: NextApiRequest, res: NextApiResponse)
             cover: cover,
             author: {
                 connect: {
-                    email: session.user?.email
+                    email: session.user?.email?.toString()
                 }
             },
-            
-
         }
     }).then((data) => {
-      
-      
         res.status(200).json({ message: "success" })
     }).catch((err) => {
         res.status(500).json({ message: "error" })
@@ -61,7 +57,22 @@ export default async function addPost(req: NextApiRequest, res: NextApiResponse)
     })
 
     
-  } else {
+  } 
+  else if (req.method === "DELETE") {
+    const del = prisma.post.delete({
+      where: {
+        id: id
+      }
+    }).then((data) => {
+      res.status(200).json({ message: "success" })
+    }).catch((err) => {
+      console.log(err);
+    }).finally(async () => {
+      await prisma.$disconnect()
+    })  
+  
+  }
+  else {
     res.status(401).json({ message: "not authorized" })
   }
   }

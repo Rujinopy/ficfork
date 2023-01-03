@@ -3,80 +3,64 @@ import { unstable_getServerSession } from 'next-auth'
 import { authOptions } from "./auth/[...nextauth]"
 import { PrismaClient } from "@prisma/client";
 import Stripe from 'stripe';
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+import { buffer } from 'micro';
+import Cors from 'micro-cors';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: '2022-08-01',
+    });
+
 const prisma = new PrismaClient();
+const webhookSecret = process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_SECRET;
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export const config = {
+    api: {
+        bodyParser: false,
+    }
+}
+
+const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     //listen for webhook events
-    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-    const sig = req.headers['stripe-signature'];
-    let event;
+ 
+   if (req.method === "POST") {
+    const buf = await buffer(req)
+    const sig = req.headers["stripe-signature"]!
+
+    let event: Stripe.Event;
+
     try {
-        event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+        event = stripe.webhooks.constructEvent(buf.toString(), sig!, webhookSecret!)
+        // console.log(event);
     }
-    catch (err) {
-        console.log(err);
-        
-        res.status(400).send(`Webhook Error: ${err}`);
-    }
-    // Handle the checkout.session.completed event
-    if (event.type === 'checkout.session.completed') {
-        console.log("checkout.session.completed");
-        
-        // Fulfill the purchase...
-        
-        
-    }
-    // Return a response to acknowledge receipt of the event
-    res.json({ received: true })
+    catch(err) {
+        const errorMessage = err instanceof Error ? err.message : "Unknown error"
 
+        if (err! instanceof Error) console.log(err.message);
+        // console.log(`Error message: ${errorMessage}`);
+
+        res.status(400).send(`Webhook error: ${err}`)
+        return
+    }
+    console.log("Success: ", event.id);
+    //handle the checkout.session.completed event
+    if (event.type === "payment_intent.succeeded") {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent
+        // console.log("PaymentIntent status: ", paymentIntent.status)
+    }
+    else {
+        // console.warn(`Unhandled event type ${event.type}`)
+    }
+    
+    res.json({received: true})
+} else {
+        console.log("Method not allowed");
+        res.setHeader("Allow", "POST")
+        res.status(405).end("Method not allowed")
+    }
 }
 
-async function handleCheckoutSession(session: any) {
-console.log(session);
+const cors = Cors({
+    allowMethods: ['POST', 'HEAD'],
+})
 
-    // const user = await prisma.post.findUnique({
-    //     where: {
-    //         id: session.client_reference_id
-    //     }
-    // }).finally(async () => {
-    //     await prisma.$disconnect()
-    // })
-    // if (user?.funding) {
-    //     const newFund = user?.funding + session.amount_total;
-    //     const updatedUser = await prisma.post.update({
-    //         where: {
-    //             id: session.client_reference_id
-    //         },
-    //         data: {
-    //             funding: newFund
-    //         }
-    //     }).then(() => {
-    //         console.log('Success')
-    //     }).catch((err) => {
-    //         console.log(err)
-    //     }).finally(async () => {
-    //         await prisma.$disconnect()
-    //     }
-
-    //     )
-    // }
-    // if (user?.funding === null) {
-    //     const newFund = session.amount_total;
-    //     const updatedUser = await prisma.post.update({
-    //         where: {
-    //             id: session.client_reference_id
-    //         },
-    //         data: {
-    //             funding: newFund
-    //         }
-    //     }).then(() => {
-    //         console.log('Success')
-    //     }).catch((err) => {
-    //         console.log(err)
-    //     }).finally(async () => {
-    //         await prisma.$disconnect()
-    //     }
-    //     )
-    // }
-}
+export default cors(webhookHandler as any)

@@ -16,11 +16,11 @@ export default function animeBar(props: any) {
 
  
     return (
-        <div className="mt-2 bg-white justify-center space-x-7 max-w-5xl mx-auto py-2 md:block flex-grow lg:flex lg:items-center lg:w-auto rounded-full border-2 border-black">
+        <div className="md:mt-2 md:bg-white pl-8 md:pl-0 justify-center md:space-x-7 w-full md:max-w-5xl mx-auto py-2 grid grid-cols-4 md:block flex-grow lg:flex lg:items-center lg:w-auto rounded-md md:rounded-full md:border-2 md:border-black">
           
           {animeList.map((anime, index) => (
             <Link href={`/posts/${anime}`} key={index}>
-              <img onClick={props.handleClick} src={anime.image} alt={anime.name} className='w-16 h-16 rounded-full hover:cursor-pointer hover:border-2 hover:border-red-500 ' />
+              <img onClick={props.handleClick} src={anime.image} alt={anime.name} className='w-14 h-14 rounded-full hover:cursor-pointer my-1 hover:border-2 hover:border-red-500 ' />
             </Link>
           ))}
               

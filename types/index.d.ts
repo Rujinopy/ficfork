@@ -16,3 +16,4 @@ declare module '@editorjs/warning';
 declare module '@editorjs/table';
 declare module '@editorjs/paragraph';
 declare module 'bcrypt';
+declare module'micro-cors';

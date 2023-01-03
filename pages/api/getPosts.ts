@@ -13,6 +13,8 @@ export default async function getPosts(req: NextApiRequest, res: NextApiResponse
         },
         take: limit ? parseInt(limit.toString()) : 10,
         skip: skip ? parseInt(skip.toString()) : 0,
+    }).finally(async () => {
+        prisma.$disconnect()
     })
 
     if (!posts) {
