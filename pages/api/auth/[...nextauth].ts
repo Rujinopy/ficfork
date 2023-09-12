@@ -33,7 +33,7 @@ export const authOptions:NextAuthOptions = {
       authorize: async (credentials, req) => {
         // Add logic here to look up the user from the credentials supplied
         //check if user exists
-        const res: any = await fetch("/api/auth/check-credential", {
+        const res: any = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/check-credential`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"

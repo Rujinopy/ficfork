@@ -1,5 +1,5 @@
 # FICFORK
-#### Video Demo:  <URL HERE>
+#### Video Demo: https://youtu.be/zoGr4f3t3_0
 #### Description:
 **FicFork** is an online fiction blog letting users to write there own manga's fan fiction they like separating from the real storyline with crowndfunding feature to turn it to a real manga.
 
@@ -7,6 +7,7 @@
 * Registration and login with credential, Google's account, Facebook's account.
 * Easy to publish, edit and delete any post with inline toolsbar.
 * "Reading Matter" - All publishment will be rendered into slides with vertical scroll for easy reading. (1 line per 1 slide)
+* Like button
 * Funding button to let that fiction be a real manga when reaching some target money.
 
 #### User's Journey:

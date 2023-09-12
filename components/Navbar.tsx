@@ -52,7 +52,7 @@ function Navbar(props: any) {
             <h1 className="hover:cursor-pointer">{session.user?.name || session.user?.email }</h1>
           </Link>
           <Link href={"/profile"}>
-            <a className="p-3"><img className="w-12 h-12 rounded-full hover:border-2 border-black" src={session.user?.image ? "session.user?.image": "blank_profile.png"} alt="" /></a>
+            <a className="p-3"><img className="w-12 h-12 rounded-full hover:border-2 border-black" src="blank_profile.png" alt="" /></a>
           </Link>
           <button onClick={() => signOut()} className="bg-white  text-black hover:border border-black font-bold py-2 px-4 rounded-full">Sign out</button>
         </>}

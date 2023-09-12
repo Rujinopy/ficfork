@@ -48,7 +48,7 @@ export default function Profile({ user } : any) {
         <div className="">
             <h1 className="text-xl font-bold md:text-3xl py-5 bg-white">Profile</h1>
             <div className="flex place-content-center md:place-content-start md:pl-12">
-                <img className="w-32 h-32 rounded-full" src={session.user?.image ? "session.user?.image": "blank_profile.png"} alt="profile" />
+                <img className="w-32 h-32 rounded-full" src={"blank_profile.png"} alt="profile" />
                 <div className="flex flex-col place-content-center px-5">
                 <h1 className="md:text-3xl ">{session.user?.name}</h1>
                 <h1 className={!session.user?.image ? "text-3xl": ""}>{session.user?.email}</h1>

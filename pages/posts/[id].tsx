@@ -57,9 +57,9 @@ export default function Home({ newPost }: any) {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative bg-slate-500">
       <nav className={`flex justify-end mx-auto space-x-8 p-3 pr-3 md:pr-0 
-      h-20 md:h-auto bg-white rounded-full max-w-3xl md:sticky absolute w-screen z-50 md:w-auto ${visible == true ? "" : "hidden"}`}>
+      h-20 md:h-auto bg-white s max-w-3xl md:sticky absolute w-screen z-50 md:w-auto ${visible == true ? "" : "hidden"}`}>
                 {session && 
                     //profile image in circle
                     <div className='flex items-center space-x-2'>
